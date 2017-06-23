@@ -27,7 +27,7 @@ test_requirements = [
 
 setup(
     name='zkpytb',
-    version='0.0.2',
+    version='0.0.3',
     description="A collection of useful functions by Zertrin",
     long_description=readme + '\n\n' + history,
     author="Marc Gallet",
