@@ -40,12 +40,10 @@ def get_git_hash(rev='HEAD'):
 
     git_hash = ''
     try:
-        git_out = subprocess.run(['git', 'rev-parse', rev],
-                                 universal_newlines=True, check=True,
-                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        git_out = subprocess.check_output(['git', 'rev-parse', rev], universal_newlines=True)
     except subprocess.CalledProcessError as e:
         mylogger.exception("Couldn't determine the git hash!")
     else:
-        git_hash = git_out.stdout.strip()
+        git_hash = git_out.strip()
 
     return git_hash
