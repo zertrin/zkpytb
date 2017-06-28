@@ -5,17 +5,19 @@ Zertrin Python Toolbox
 
 .. image:: https://img.shields.io/pypi/v/zkpytb.svg
         :target: https://pypi.python.org/pypi/zkpytb
+        :alt: PyPI Package latest release
 
 .. image:: https://img.shields.io/travis/zertrin/zkpytb.svg
         :target: https://travis-ci.org/zertrin/zkpytb
+        :alt: Travis-CI Build status
 
 .. image:: https://readthedocs.org/projects/zkpytb/badge/?version=latest
         :target: https://zkpytb.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://pyup.io/repos/github/zertrin/zkpytb/shield.svg
-     :target: https://pyup.io/repos/github/zertrin/zkpytb/
-     :alt: Updates
+.. image:: https://img.shields.io/pypi/pyversions/zkpytb.svg
+        :target: https://pypi.python.org/pypi/zkpytb
+        :alt: Supported Versions
 
 
 A collection of useful functions by Zertrin
@@ -28,7 +30,10 @@ A collection of useful functions by Zertrin
 Features
 --------
 
-* TODO
+* zkpytb.dicts: Helper functions for dictionaries.
+* zkpytb.logging: Helper functions for logging.
+* zkpytb.pandas: Helper functions for Pandas.
+* zkpytb.utils: Miscellaneous helper functions.
 
 Credits
 ---------
