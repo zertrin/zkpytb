@@ -12,6 +12,7 @@ pd = pytest.importorskip("pandas")  # noqa
 from numpy.testing import assert_array_equal
 
 from zkpytb.pandas import (
+    extended_percentiles,
     compare_df_cols,
     df_query_with_ratio,
     move_col_to_beginning_of_df,
@@ -65,6 +66,25 @@ def test_df_query_with_ratio_not_a_df(not_a_df):
         df_query_with_ratio(not_a_df, '')
 
 
+@pytest.fixture(params=[None, [.1, .25, .5, .75, .9]])
+def percentiles(request):
+        return request.param
+
+
+@pytest.fixture(params=[True, False])
+def disp(request):
+        return request.param
+
+
+def test_tdescr_df1(df1, percentiles, disp):
+    res = tdescr(df1, percentiles=percentiles, disp=disp)
+    assert isinstance(res, pd.DataFrame)
+    res_rows, res_cols = res.shape
+    epl = len(extended_percentiles) if percentiles is None else len(percentiles)
+    assert res_cols == 5 + epl
+    assert res_rows == len(df1.columns)
+
+
 def test_df_query_with_ratio(df1):
     res, ratio = df_query_with_ratio(df1, 'c > 5')
     assert ratio == approx(0.5)
@@ -87,9 +107,17 @@ def test_move_col_to_beginning_of_df(df1):
 
 
 @pytest.mark.xfail(reason="To investigate...")
-def test_compare_df_cols(df1, df2):
-    res1 = compare_df_cols([df1, df2], ['e', 'f', 'g'], mode=1)
-    assert res1.columns == ['e_1', 'e_2', 'f_1', 'f_2', 'g_1', 'g_2']
+def test_compare_df_cols_mode1(df1, df2):
+    res = compare_df_cols([df1, df2], ['e', 'f', 'g'], mode=1)
+    assert res.columns == ['e_1', 'e_2', 'f_1', 'f_2', 'g_1', 'g_2']
 
-    res2 = compare_df_cols([df1, df2], ['e', 'f', 'g'], mode=2)
-    assert res2.columns == ['e_1', 'f_1', 'g_1', 'e_2', 'f_2', 'g_2']
+
+@pytest.mark.xfail(reason="To investigate...")
+def test_compare_df_cols_mode2(df1, df2):
+    res = compare_df_cols([df1, df2], ['e', 'f', 'g'], mode=2)
+    assert res.columns == ['e_1', 'f_1', 'g_1', 'e_2', 'f_2', 'g_2']
+
+
+def test_compare_df_cols_mode3(df1, df2):
+    res = compare_df_cols([df1, df2], ['e', 'f', 'g'], mode=3)
+    assert res is None
