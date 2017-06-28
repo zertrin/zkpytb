@@ -11,6 +11,10 @@ Zertrin Python Toolbox
         :target: https://travis-ci.org/zertrin/zkpytb
         :alt: Travis-CI Build status
 
+.. image:: https://coveralls.io/repos/github/zertrin/zkpytb/badge.svg?branch=master
+        :target: https://coveralls.io/github/zertrin/zkpytb?branch=master
+        :alt: Coverage status
+
 .. image:: https://readthedocs.org/projects/zkpytb/badge/?version=latest
         :target: https://zkpytb.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status

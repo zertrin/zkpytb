@@ -4,8 +4,15 @@ Small helper functions related to pandas functionalities
 Author: Marc Gallet (2017)
 """
 
-import numpy as np
-import pandas as pd
+try:
+    import numpy as np
+    import pandas as pd
+except ImportError as e:  # pragma: no cover
+    raise ImportError(
+        'numpy and pandas packages are required in order to use this module '
+        'but they are not installed automatically by the zkpytb package. '
+        'Please install them yourself.'
+    )
 
 
 # More percentiles when using pd.describe()
