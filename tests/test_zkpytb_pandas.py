@@ -84,3 +84,12 @@ def test_only_outliers(df1):
 def test_move_col_to_beginning_of_df(df1):
     res = move_col_to_beginning_of_df(df1, 'e')
     assert_array_equal(res.columns, ['e', 'a', 'b', 'c', 'd', 'f', 'g', 'n'])
+
+
+@pytest.mark.xfail(reason="To investigate...")
+def test_compare_df_cols(df1, df2):
+    res1 = compare_df_cols([df1, df2], ['e', 'f', 'g'], mode=1)
+    assert res1.columns == ['e_1', 'e_2', 'f_1', 'f_2', 'g_1', 'g_2']
+
+    res2 = compare_df_cols([df1, df2], ['e', 'f', 'g'], mode=2)
+    assert res2.columns == ['e_1', 'f_1', 'g_1', 'e_2', 'f_2', 'g_2']
