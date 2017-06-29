@@ -23,6 +23,10 @@ Zertrin Python Toolbox
         :target: https://pypi.python.org/pypi/zkpytb
         :alt: Supported Versions
 
+.. image:: https://img.shields.io/github/license/zertrin/zkpytb.svg
+        :target: https://github.com/zertrin/zkpytb
+        :alt: License
+
 
 A collection of useful functions by Zertrin
 
@@ -34,10 +38,19 @@ A collection of useful functions by Zertrin
 Features
 --------
 
-* zkpytb.dicts: Helper functions for dictionaries.
-* zkpytb.logging: Helper functions for logging.
-* zkpytb.pandas: Helper functions for Pandas.
-* zkpytb.utils: Miscellaneous helper functions.
+.. list-table::
+   :header-rows: 1
+
+   * - Module
+     - Description
+   * - zkpytb.dicts
+     - Helper functions for dictionaries.
+   * - zkpytb.logging
+     - Helper functions for logging.
+   * - zkpytb.pandas
+     - Helper functions for Pandas.
+   * - zkpytb.utils
+     - Miscellaneous helper functions.
 
 Credits
 ---------
