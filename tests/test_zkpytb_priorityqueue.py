@@ -6,6 +6,7 @@
 import pytest
 
 from zkpytb.priorityqueue import (
+    EmptyQueueError,
     PriorityQueue,
 )
 
@@ -33,6 +34,6 @@ def test_priority_queue_add_pop_task():
     assert pq.pop_task() == 'middle2'
     assert pq.pop_task() == 'to be replaced'
     assert pq.pop_task() == 'last'
-    with pytest.raises(KeyError) as excinfo:
+    with pytest.raises(EmptyQueueError) as excinfo:
         pq.pop_task()
     assert excinfo.value.args[0] == 'pop from an empty priority queue'
