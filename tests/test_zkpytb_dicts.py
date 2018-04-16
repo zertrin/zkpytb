@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for `zkpytb` package."""
+"""Tests for the `dicts` module of `zkpytb` package."""
 
 import pytest
 
