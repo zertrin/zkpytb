@@ -19,6 +19,8 @@ from zkpytb.pandas import (
     only_outliers,
     remove_outliers,
     tdescr,
+    mad,
+    percentile,
 )
 
 
@@ -121,3 +123,39 @@ def test_compare_df_cols_mode2(df1, df2):
 def test_compare_df_cols_mode3(df1, df2):
     res = compare_df_cols([df1, df2], ['e', 'f', 'g'], mode=3)
     assert res is None
+
+
+def test_mad_df1(df1):
+    f = mad()
+    assert f.__name__ == 'mad'
+    assert f(df1.a) == pytest.approx(0.0)
+    assert f(df1.b) == pytest.approx(0.0)
+    assert f(df1.c) == pytest.approx(3.7065055462640051)
+    assert f(df1.d) == pytest.approx(3.7065055462640051)
+    assert f(df1.e) == pytest.approx(0.32667683062127778)
+    assert f(df1.f) == pytest.approx(0.93021508625544813)
+    assert f(df1.g) == pytest.approx(17.791226622067224)
+
+
+def test_mad_c1_df1(df1):
+    f = mad(c=1, name='mad_c1')
+    assert f.__name__ == 'mad_c1'
+    assert f(df1.a) == pytest.approx(0.0)
+    assert f(df1.b) == pytest.approx(0.0)
+    assert f(df1.c) == pytest.approx(2.5)
+    assert f(df1.d) == pytest.approx(2.5)
+    assert f(df1.e) == pytest.approx(0.22034017388059335)
+    assert f(df1.f) == pytest.approx(0.6274205411570638)
+    assert f(df1.g) == pytest.approx(12.0)
+
+
+def test_percentile_df1(df1):
+    f = percentile(25)
+    assert f.__name__ == 'percentile_25'
+    assert f(df1.a) == pytest.approx(0.0)
+    assert f(df1.b) == pytest.approx(1.0)
+    assert f(df1.c) == pytest.approx(3.25)
+    assert f(df1.d) == pytest.approx(2.25)
+    assert f(df1.e) == pytest.approx(0.27941244048295077)
+    assert f(df1.f) == pytest.approx(-1.1127832698328843)
+    assert f(df1.g) == pytest.approx(37.75)
