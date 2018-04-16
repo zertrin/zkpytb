@@ -11,4 +11,5 @@ PyYAML>=3.12
 pytest>=3.1.2
 pytest-runner>=2.11.1
 pytest-cov
-pandas
+pandas; python_version >= '3.5'
+pandas<0.21; python_version == '3.4'

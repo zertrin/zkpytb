@@ -36,6 +36,7 @@ setup(
     packages=find_packages(include=['zkpytb']),
     include_package_data=True,
     install_requires=requirements,
+    python_requires='~=3.4',
     license="MIT license",
     zip_safe=False,
     keywords='zkpytb',
