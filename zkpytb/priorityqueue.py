@@ -31,7 +31,7 @@ class PriorityQueue:
 
     def __next__(self):
         try:
-            return self.pop()
+            return self.pop_task()
         except EmptyQueueError:
             raise StopIteration
 
