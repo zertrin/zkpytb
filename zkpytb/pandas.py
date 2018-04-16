@@ -7,9 +7,10 @@ Author: Marc Gallet (2017)
 try:
     import numpy as np
     import pandas as pd
+    import statsmodels.robust as smrb
 except ImportError as e:  # pragma: no cover
     raise ImportError(
-        'numpy and pandas packages are required in order to use this module '
+        'numpy, pandas and statsmodels packages are required in order to use this module'
         'but they are not installed automatically by the zkpytb package. '
         'Please install them yourself.'
     )
@@ -108,3 +109,23 @@ def compare_df_cols(df_list, col_list, mode=1):
         return None
 
     return pd.concat(colstoconcat, axis=1)
+
+
+def mad(c=None, name='mad'):
+    if c is not None:
+        def _mad(x):
+            return smrb.mad(x, c=c)
+    else:
+        def _mad(x):
+            return smrb.mad(x)
+    _mad.__name__ = name
+    return _mad
+
+
+def percentile(n):
+
+    def _percentile(x):
+        return np.percentile(x, n)
+    _percentile.__name__ = 'percentile_%02d' % n
+
+    return _percentile
