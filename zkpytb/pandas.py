@@ -7,11 +7,10 @@ Author: Marc Gallet (2017)
 try:
     import numpy as np
     import pandas as pd
-    import statsmodels.robust as smrb
 except ImportError as e:  # pragma: no cover
     raise ImportError(
-        'numpy, pandas and statsmodels packages are required in order to use this module'
-        'but they are not installed automatically by the zkpytb package. '
+        'numpy and pandas packages are required in order to use this module '
+        'but they will not installed automatically by the zkpytb package. '
         'Please install them yourself.'
     )
 
@@ -112,6 +111,15 @@ def compare_df_cols(df_list, col_list, mode=1):
 
 
 def mad(c=None, name='mad'):
+    try:
+        import statsmodels.robust as smrb
+    except ImportError as e:  # pragma: no cover
+        raise ImportError(
+            'The statsmodels package is required in order to use this function '
+            'but it will not installed automatically by the zkpytb package. '
+            'Please install it yourself.'
+        )
+
     if c is not None:
         def _mad(x):
             return smrb.mad(x, c=c)

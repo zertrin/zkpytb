@@ -2,7 +2,7 @@
 History
 =======
 
-Next release
+0.0.5 (2017-04-17)
 ------------------
 
 * Add an implementation of PriorityQueue based on heapqueue in zkpytb.priorityqueue

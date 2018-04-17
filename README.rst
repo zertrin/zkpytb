@@ -49,6 +49,8 @@ Features
      - Helper functions for logging.
    * - zkpytb.pandas
      - Helper functions for Pandas.
+   * - zkpytb.priorityqueue
+     - An implementation of PriorityQueue based on heapq.
    * - zkpytb.utils
      - Miscellaneous helper functions.
 
