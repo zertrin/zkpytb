@@ -2,6 +2,12 @@
 History
 =======
 
+0.0.6 (2017-04-17)
+------------------
+
+* zkpytb.pandas: only try to import statsmodels when using mad()
+* Minor changes missed while relasing previous version.
+
 0.0.5 (2017-04-17)
 ------------------
 
