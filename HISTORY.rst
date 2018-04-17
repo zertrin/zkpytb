@@ -2,6 +2,15 @@
 History
 =======
 
+Next release
+------------------
+
+* Add an implementation of PriorityQueue based on heapqueue in zkpytb.priorityqueue
+* Add mad(c) (median absolute deviation) and percentile(q) functions in zkpytb.pandas
+* Add code coverage and coveralls
+* Add tests for zkpytb.pandas
+* Fix requirements_dev.txt because pandas>=0.21 is not compatible with py34
+
 0.0.4 (2017-06-27)
 ------------------
 
