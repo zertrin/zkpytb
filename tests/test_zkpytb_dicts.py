@@ -11,6 +11,7 @@ from zkpytb.dicts import (
     filter_dict_only_scalar_values,
     filter_dict_with_keylist,
     mergedicts,
+    hashdict,
 )
 
 
@@ -123,3 +124,24 @@ def test_mergedict_1(dict1, dict2):
         'x': 'xxx',
     }
     assert res == expected_res
+
+
+def test_hashdict_not_a_dict(not_a_dict):
+    with pytest.raises(AssertionError):
+        hashdict(not_a_dict)
+
+
+def test_hashdict_1(dict2):
+    res = {}
+    res['default'] = hashdict(dict2)
+    for m in ['sha1', 'sha256', 'sha512', 'md5', 'blake2b', 'blake2s']:
+        res[m] = hashdict(dict2, method=m)
+    assert res['sha1'] == '5fa3c59b2295cdb4c7a01c20e086971a0bcfcb7d'
+    assert res['sha256'] == 'ca7b51eb5b04a2c8aee95b7e731d971ecce750b0bd24ab8c90156e3b1f22aeaa'
+    assert res['sha512'] == ('f7fcc1885ef531ba1c4e0e56b3c38f5cd398cbef1778ee404559d6cd34083c32'
+                             '88c63dd9fee4834fbea0bc2b8f04cb66309d4468ba55ad47c76961cd293e20dc')
+    assert res['md5'] == 'e1926c486437ca20489d4c35210db768'
+    assert res['blake2b'] == ('01303535c6f0b50006d31d36843489d8ec9364a60f85a2802e53676fa78fd671'
+                              '9251664cd7dea5af3f46f7b6625b35e55c71863e99e624d687bbb32440bd573d')
+    assert res['blake2s'] == '7b418c386652a926453cefc8fcc0710a13e527c98980df2295c73a11c4bb9374'
+    assert res['default'] == res['sha1']

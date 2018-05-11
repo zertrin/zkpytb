@@ -5,7 +5,9 @@ Author: Marc Gallet
 Date: 2017-04
 """
 
-# Useful helper functions to filter dictionaries based on key/value characteristics
+
+import hashlib
+import json
 
 
 def filter_dict_callfunc(dict_in, func):
@@ -42,3 +44,11 @@ def mergedicts(dict1, dict2):
             yield (k, dict1[k])
         else:
             yield (k, dict2[k])
+
+
+def hashdict(dict_in, method='sha1'):
+    assert(isinstance(dict_in, dict))
+    h = hashlib.new(method)
+    dict_repr = json.dumps(dict_in, sort_keys=True)
+    h.update(dict_repr.encode('utf-8'))
+    return h.hexdigest()
