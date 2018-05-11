@@ -2,6 +2,11 @@
 History
 =======
 
+0.0.9 (2018-05-11)
+------------------
+
+* Add module zkpytb.json with a custom JSONEncoder class, and use it in hashdict().
+
 0.0.8 (2018-05-11)
 ------------------
 
