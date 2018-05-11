@@ -5,25 +5,21 @@
 
 from setuptools import setup, find_packages
 
+
+def parse_requirements(filename):
+    """ load requirements from a pip requirements file """
+    lineiter = (line.strip() for line in open(filename))
+    return [line for line in lineiter if line and not line.startswith("#")]
+
+
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [
-    # TODO: put package requirements here
-]
-
-setup_requirements = [
-    'pytest-runner',
-    # TODO(zertrin): put setup requirements (distutils extensions, etc.) here
-]
-
-test_requirements = [
-    'pytest',
-    # TODO: put package test requirements here
-]
+requirements = parse_requirements('requirements.txt')
+test_requirements = parse_requirements('requirements_dev.txt')
 
 setup(
     name='zkpytb',
@@ -58,5 +54,4 @@ setup(
     ],
     test_suite='tests',
     tests_require=test_requirements,
-    setup_requires=setup_requirements,
 )
