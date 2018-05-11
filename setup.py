@@ -23,7 +23,7 @@ test_requirements = parse_requirements('requirements_dev.txt')
 
 setup(
     name='zkpytb',
-    version='0.0.7',
+    version='0.0.8',
     description="A collection of useful functions by Zertrin",
     long_description=readme + '\n\n' + history,
     author="Marc Gallet",
