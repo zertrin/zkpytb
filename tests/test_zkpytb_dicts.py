@@ -151,3 +151,34 @@ def test_hashdict_1(dict2):
                                   '9251664cd7dea5af3f46f7b6625b35e55c71863e99e624d687bbb32440bd573d')
         assert res['blake2s'] == '7b418c386652a926453cefc8fcc0710a13e527c98980df2295c73a11c4bb9374'
     assert res['default'] == res['sha1']
+
+
+def test_hashdict_2():
+    import datetime
+    import decimal
+    import pathlib
+    import uuid
+    d = {
+        'None': None,
+        'bool': True,
+        'int': 123456789,
+        'complex': 1 + 2j,
+        'float': 3.14159,
+        'infinity': float('inf'),
+        'nan': float('nan'),
+        'string': 'lalala',
+        'decimal': decimal.Decimal('1.1618'),
+        'pathlib.Path': pathlib.Path('test/a/path.test'),
+        'datetime.timedelta': datetime.timedelta(days=1, minutes=2, seconds=3),
+        'datetime.date': datetime.date(2007, 12, 5),
+        'datetime.time': datetime.time(17, 28, 59),
+        'datetime.datetime': datetime.datetime(2007, 12, 5, 17, 28, 59),
+        'uuid': uuid.UUID('{00010203-0405-0607-0809-0a0b0c0d0e0f}'),
+    }
+    res = hashdict(d)
+    assert res == '1aa572054769b78af1e9ed7cbd70cc1cb149a90b'
+
+
+def test_hashdict_3():
+    with pytest.raises(TypeError):
+        hashdict({'lambda': lambda x: x})

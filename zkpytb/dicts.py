@@ -2,12 +2,13 @@
 Helper functions related to dictionaries
 
 Author: Marc Gallet
-Date: 2017-04
 """
 
 
 import hashlib
 import json
+
+from zkpytb.json import JSONEncoder
 
 
 def filter_dict_callfunc(dict_in, func):
@@ -49,6 +50,6 @@ def mergedicts(dict1, dict2):
 def hashdict(dict_in, method='sha1'):
     assert(isinstance(dict_in, dict))
     h = hashlib.new(method)
-    dict_repr = json.dumps(dict_in, sort_keys=True)
+    dict_repr = json.dumps(dict_in, sort_keys=True, cls=JSONEncoder)
     h.update(dict_repr.encode('utf-8'))
     return h.hexdigest()
