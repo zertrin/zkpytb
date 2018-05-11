@@ -30,7 +30,7 @@ def setup_simple_console_and_file_logger(logger_name, logfile=True,
                                'Received type: {}'.format(type(logdir)))
             do_file_logging = False
         else:
-            if not logdir.is_dir():
+            if not log_directory.is_dir():
                 mylogger.warning('The given logdir is not a directory!')
                 do_file_logging = False
 
@@ -61,7 +61,7 @@ def setup_simple_console_and_file_logger(logger_name, logfile=True,
         'level': log_level,
         'class': 'logging.FileHandler',
         'formatter': file_formatter,
-        'filename': log_filepath,
+        'filename': str(log_filepath),
     }
 
     logging_conf = {
