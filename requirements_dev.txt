@@ -14,6 +14,8 @@ pytest-runner>=2.11.1
 pytest-cov
 testfixtures>=6.0.0
 
+numpy
 pandas; python_version >= '3.5'
 pandas<0.21; python_version == '3.4'
+scipy
 statsmodels
