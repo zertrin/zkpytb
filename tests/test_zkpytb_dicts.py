@@ -8,10 +8,13 @@ import sys
 
 
 from zkpytb.dicts import (
+    AutoDict,
+    AutoOrderedDict,
     filter_dict_callfunc,
     filter_dict_only_scalar_values,
     filter_dict_with_keylist,
     mergedicts,
+    dict_stable_json_repr,
     hashdict,
 )
 
@@ -182,3 +185,33 @@ def test_hashdict_2():
 def test_hashdict_3():
     with pytest.raises(TypeError):
         hashdict({'lambda': lambda x: x})
+
+
+def test_autodict(base_class=AutoDict):
+    adict = base_class()
+    assert isinstance(adict, dict)
+    assert isinstance(adict['x'], base_class)
+    assert isinstance(adict['x']['y'], base_class)
+    assert isinstance(adict['x']['y']['z'], base_class)
+    adict['a'] = 123
+    assert adict['a'] == 123
+    adict['b']['b1'] = 456
+    assert adict['b']['b1'] == 456
+    adict['b']['b2'] = 789
+    assert adict['b']['b2'] == 789
+    adict['c']['c1']['c11'] = 999
+    assert adict['c']['c1']['c11'] == 999
+    adict['d'] = {}
+    with pytest.raises(KeyError):
+        adict['d']['d1']['d2'] = None
+    adict_as_dict = adict.to_dict()
+    assert not isinstance(adict_as_dict, base_class)
+    assert not isinstance(adict_as_dict['b'], base_class)
+    with pytest.raises(KeyError):
+        adict_as_dict['e']['e1']['e2'] = None
+    if isinstance(adict, AutoOrderedDict):
+        assert list(adict.keys()) == ['x', 'a', 'b', 'c', 'd']
+
+
+def test_autoordereddict():
+    test_autodict(base_class=AutoOrderedDict)

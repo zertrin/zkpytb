@@ -8,7 +8,39 @@ Author: Marc Gallet
 import hashlib
 import json
 
+from collections import OrderedDict
+
 from zkpytb.json import JSONEncoder
+
+
+class AutoDict(dict):
+    """
+    Default dict of dicts with infinite nesting (a.k.a. autovivification).
+    """
+    _base_class = dict
+
+    def __getitem__(self, key):
+        try:
+            return self._base_class.__getitem__(self, key)
+        except KeyError:
+            value = self[key] = type(self)()
+            return value
+
+    def to_dict(self):
+        """
+        Convert this AutoDict to a normal dict (without autovivification).
+        """
+        return self._base_class(
+            (key, (val.to_dict() if isinstance(val, AutoDict) else val))
+            for key, val in self.items()
+        )
+
+
+class AutoOrderedDict(OrderedDict, AutoDict):
+    """
+    Default dict of OrderedDicts with infinite nesting (a.k.a. autovivification).
+    """
+    _base_class = OrderedDict
 
 
 def filter_dict_callfunc(dict_in, func):
