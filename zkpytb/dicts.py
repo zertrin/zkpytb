@@ -79,9 +79,13 @@ def mergedicts(dict1, dict2):
             yield (k, dict2[k])
 
 
+def dict_stable_json_repr(dict_in):
+    return json.dumps(dict_in, sort_keys=True, cls=JSONEncoder)
+
+
 def hashdict(dict_in, method='sha1'):
     assert(isinstance(dict_in, dict))
     h = hashlib.new(method)
-    dict_repr = json.dumps(dict_in, sort_keys=True, cls=JSONEncoder)
+    dict_repr = dict_stable_json_repr(dict_in)
     h.update(dict_repr.encode('utf-8'))
     return h.hexdigest()

@@ -24,7 +24,7 @@ class JSONEncoder(json.JSONEncoder):
             pass
         # handle Path objects
         if isinstance(o, pathlib.Path):
-            return str(o)
+            return str(o).replace('\\', '/')
         # handle UUID objects
         if isinstance(o, uuid.UUID):
             return str(o)

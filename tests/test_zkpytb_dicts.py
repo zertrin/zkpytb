@@ -178,6 +178,13 @@ def test_hashdict_2():
         'datetime.datetime': datetime.datetime(2007, 12, 5, 17, 28, 59),
         'uuid': uuid.UUID('{00010203-0405-0607-0809-0a0b0c0d0e0f}'),
     }
+    d_json_repr = dict_stable_json_repr(d)
+    assert d_json_repr == (
+        '''{"None": null, "bool": true, "complex": "(1+2j)", "datetime.date": "2007-12-05",'''
+        ''' "datetime.datetime": "2007-12-05T17:28:59", "datetime.time": "17:28:59", "datetime.timedelta": 86523.0,'''
+        ''' "decimal": "1.1618", "float": 3.14159, "infinity": Infinity, "int": 123456789, "nan": NaN,'''
+        ''' "pathlib.Path": "test/a/path.test", "string": "lalala", "uuid": "00010203-0405-0607-0809-0a0b0c0d0e0f"}'''
+    )
     res = hashdict(d)
     assert res == '1aa572054769b78af1e9ed7cbd70cc1cb149a90b'
 

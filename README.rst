@@ -45,6 +45,8 @@ Features
      - Description
    * - zkpytb.dicts
      - Helper functions for dictionaries.
+   * - zkpytb.json
+     - Helpers related to json.
    * - zkpytb.logging
      - Helper functions for logging.
    * - zkpytb.pandas
