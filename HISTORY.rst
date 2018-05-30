@@ -2,6 +2,13 @@
 History
 =======
 
+0.0.10 (2018-05-30)
+-------------------
+
+* Add AutoDict and AutoOrderedDict classes in zkpytb.dicts
+* zkpytb.dicts.hashdict and JsonEncoder: normalize path separator to ensure stable representation and hash for windows and linux.
+* Fix tests test_compare_df_cols_*() to reach 100% coverage.
+
 0.0.9 (2018-05-11)
 ------------------
 
