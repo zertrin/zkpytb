@@ -108,16 +108,14 @@ def test_move_col_to_beginning_of_df(df1):
     assert_array_equal(res.columns, ['e', 'a', 'b', 'c', 'd', 'f', 'g', 'n'])
 
 
-@pytest.mark.xfail(reason="To investigate...")
 def test_compare_df_cols_mode1(df1, df2):
     res = compare_df_cols([df1, df2], ['e', 'f', 'g'], mode=1)
-    assert res.columns == ['e_1', 'e_2', 'f_1', 'f_2', 'g_1', 'g_2']
+    assert list(res.columns) == ['e_1', 'e_2', 'f_1', 'f_2', 'g_1', 'g_2']
 
 
-@pytest.mark.xfail(reason="To investigate...")
 def test_compare_df_cols_mode2(df1, df2):
     res = compare_df_cols([df1, df2], ['e', 'f', 'g'], mode=2)
-    assert res.columns == ['e_1', 'f_1', 'g_1', 'e_2', 'f_2', 'g_2']
+    assert list(res.columns) == ['e_1', 'f_1', 'g_1', 'e_2', 'f_2', 'g_2']
 
 
 def test_compare_df_cols_mode3(df1, df2):

@@ -97,11 +97,11 @@ def compare_df_cols(df_list, col_list, mode=1):
     Mode 2: iterate over DataFrames as top level and columns as second level
     """
     if mode == 1:
-        colstoconcat = [df.loc[col].rename(df.loc[col].name + '_' + str(i + 1))
+        colstoconcat = [df.loc[:, col].rename(df.loc[:, col].name + '_' + str(i + 1))
                         for col in col_list
                         for i, df in enumerate(df_list)]
     elif mode == 2:
-        colstoconcat = [df.loc[col].rename(df.loc[col].name + '_' + str(i + 1))
+        colstoconcat = [df.loc[:, col].rename(df.loc[:, col].name + '_' + str(i + 1))
                         for i, df in enumerate(df_list)
                         for col in col_list]
     else:
