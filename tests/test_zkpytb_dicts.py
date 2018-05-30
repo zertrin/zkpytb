@@ -115,7 +115,7 @@ def test_filter_dict_with_keylist_blacklist(dict1):
     assert res_keys == orig_keys - set(blacklist)
 
 
-def test_mergedict_1(dict1, dict2):
+def test_mergedicts_1(dict1, dict2):
     res = dict(mergedicts(dict1, dict2))
     expected_res = {
         'a': 1,
@@ -128,6 +128,11 @@ def test_mergedict_1(dict1, dict2):
         'x': 'xxx',
     }
     assert res == expected_res
+
+
+def test_mergedicts_not_a_dict(dict1, not_a_dict):
+    with pytest.raises(AssertionError):
+        dict(mergedicts(dict1, not_a_dict))
 
 
 def test_hashdict_not_a_dict(not_a_dict):
