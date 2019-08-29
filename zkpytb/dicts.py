@@ -91,3 +91,12 @@ def hashdict(dict_in, method='sha1'):
     dict_repr = dict_stable_json_repr(dict_in)
     h.update(dict_repr.encode('utf-8'))
     return h.hexdigest()
+
+
+def dict_values_map(f, d):
+    """
+    Simple helper to apply a function to the values of a dictionary.
+
+    This is similar to built-in map() but only accept one iterable dict.
+    """
+    return {k: f(v) for k, v in d.items()}

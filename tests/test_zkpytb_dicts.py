@@ -16,6 +16,7 @@ from zkpytb.dicts import (
     mergedicts,
     dict_stable_json_repr,
     hashdict,
+    dict_values_map,
 )
 
 
@@ -62,6 +63,27 @@ def dict2():
     return {
         'e': {'e2': 'test2', 'e3': {'e3a': 0, 'e3b': [None]}},
         'x': 'xxx',
+    }
+
+
+@pytest.fixture(scope='module')
+def dict3():
+    return {
+        '1%': 181,
+        '25%': 321,
+        '5%': 243,
+        '50%': 647,
+        '75%': 1675,
+        '95%': 3177,
+        '99%': 3278,
+        'count': 43243,
+        'iqr': 1354,
+        'mad': 523,
+        'mad_c1': 353,
+        'max': 3357,
+        'mean': 1117,
+        'min': 167,
+        'std': 1045,
     }
 
 
@@ -227,3 +249,26 @@ def test_autodict(base_class=AutoDict):
 
 def test_autoordereddict():
     test_autodict(base_class=AutoOrderedDict)
+
+
+def test_dict_values_map_1(dict3):
+    res = dict_values_map(lambda x: x % 10, dict3)
+    expected_res = {
+        '1%': 1,
+        '25%': 1,
+        '5%': 3,
+        '50%': 7,
+        '75%': 5,
+        '95%': 7,
+        '99%': 8,
+        'count': 3,
+        'iqr': 4,
+        'mad': 3,
+        'mad_c1': 3,
+        'max': 7,
+        'mean': 7,
+        'min': 7,
+        'std': 5,
+    }
+    assert res == expected_res
+    pass
