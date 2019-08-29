@@ -2,6 +2,11 @@
 History
 =======
 
+0.1.1 (2019-08-29)
+-------------------
+
+* setup.py: add 'Programming Language :: Python :: 3.7' trove classifier
+
 0.1.0 (2019-08-29)
 -------------------
 
