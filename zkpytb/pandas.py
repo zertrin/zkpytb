@@ -8,7 +8,7 @@ try:
     import numpy as np
     import pandas as pd
     import scipy
-except ImportError as e:  # pragma: no cover
+except ImportError:  # pragma: no cover
     raise ImportError(
         'numpy, pandas and scipy packages are required in order to use this module '
         'but they will not installed automatically by the zkpytb package. '
@@ -114,7 +114,7 @@ def compare_df_cols(df_list, col_list, mode=1):
 def mad(c=None, name='mad'):
     try:
         import statsmodels.robust as smrb
-    except ImportError as e:  # pragma: no cover
+    except ImportError:  # pragma: no cover
         raise ImportError(
             'The statsmodels package is required in order to use this function '
             'but it will not installed automatically by the zkpytb package. '
@@ -145,8 +145,8 @@ def describe_numeric_1d(series):
     Patched version of pandas' .describe() function for Series
     which includes the calculation of the median absolute deviation and interquartile range
     """
-    stat_index = (['count', 'mean', 'std', 'mad', 'mad_c1', 'iqr', 'min'] +
-                  pd.io.formats.format.format_percentiles(extended_percentiles) + ['max'])
+    stat_index = (['count', 'mean', 'std', 'mad', 'mad_c1', 'iqr', 'min']
+                  + pd.io.formats.format.format_percentiles(extended_percentiles) + ['max'])
     d = (
         [
             series.count(),
@@ -156,8 +156,8 @@ def describe_numeric_1d(series):
             mad(1, name='mad_c1')(series.dropna()),
             scipy.stats.iqr(series, nan_policy='omit'),
             series.min()
-        ] +
-        series.quantile(extended_percentiles).tolist() +
-        [series.max()]
+        ]
+        + series.quantile(extended_percentiles).tolist()
+        + [series.max()]
     )
     return pd.Series(d, index=stat_index, name=series.name)

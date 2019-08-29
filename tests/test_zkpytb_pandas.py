@@ -76,12 +76,12 @@ def test_df_query_with_ratio_not_a_df(not_a_df):
 
 @pytest.fixture(params=[None, [.1, .25, .5, .75, .9]])
 def percentiles(request):
-        return request.param
+    return request.param
 
 
 @pytest.fixture(params=[True, False])
 def disp(request):
-        return request.param
+    return request.param
 
 
 def test_tdescr_df1(df1, percentiles, disp):

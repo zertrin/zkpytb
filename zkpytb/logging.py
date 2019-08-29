@@ -24,7 +24,7 @@ def setup_simple_console_and_file_logger(logger_name, logfile=True,
     if logdir is not None:
         try:
             log_directory = Path(logdir)
-        except TypeError as e:
+        except TypeError:
             mylogger.exception('Invalid type for argument "logdir". '
                                'Expected "str", "bytes" or "pathlib.Path". '
                                'Received type: {}'.format(type(logdir)))
