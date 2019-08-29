@@ -2,6 +2,13 @@
 History
 =======
 
+0.1.0 (2019-08-29)
+-------------------
+
+* zkpytb.dicts: Add dict_value_map()
+* zkpytb.pandas: add describe_numeric_1d(series)
+* Add py 3.7 to tox.ini and .travis.yml
+
 0.0.10 (2018-05-30)
 -------------------
 
