@@ -7,9 +7,10 @@ Author: Marc Gallet (2017)
 try:
     import numpy as np
     import pandas as pd
+    import scipy
 except ImportError as e:  # pragma: no cover
     raise ImportError(
-        'numpy and pandas packages are required in order to use this module '
+        'numpy, pandas and scipy packages are required in order to use this module '
         'but they will not installed automatically by the zkpytb package. '
         'Please install them yourself.'
     )
@@ -137,3 +138,26 @@ def percentile(n):
     _percentile.__name__ = 'percentile_%02d' % n
 
     return _percentile
+
+
+def describe_numeric_1d(series):
+    """
+    Patched version of pandas' .describe() function for Series
+    which includes the calculation of the median absolute deviation and interquartile range
+    """
+    stat_index = (['count', 'mean', 'std', 'mad', 'mad_c1', 'iqr', 'min'] +
+                  pd.io.formats.format.format_percentiles(extended_percentiles) + ['max'])
+    d = (
+        [
+            series.count(),
+            series.mean(),
+            series.std(),
+            mad()(series.dropna()),
+            mad(1, name='mad_c1')(series.dropna()),
+            scipy.stats.iqr(series, nan_policy='omit'),
+            series.min()
+        ] +
+        series.quantile(extended_percentiles).tolist() +
+        [series.max()]
+    )
+    return pd.Series(d, index=stat_index, name=series.name)

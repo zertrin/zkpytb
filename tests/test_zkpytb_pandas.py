@@ -21,7 +21,13 @@ from zkpytb.pandas import (
     tdescr,
     mad,
     percentile,
+    describe_numeric_1d,
 )
+
+
+describe_numeric_1d_expected_col_list = [
+    'count', 'mean', 'std', 'mad', 'mad_c1', 'iqr', 'min', '1%', '5%', '25%', '50%', '75%', '95%', '99%', 'max'
+]
 
 
 def dummyfunc():
@@ -157,3 +163,39 @@ def test_percentile_df1(df1):
     assert f(df1.e) == pytest.approx(0.27941244048295077)
     assert f(df1.f) == pytest.approx(-1.1127832698328843)
     assert f(df1.g) == pytest.approx(37.75)
+
+
+def test_describe_numeric_1d_df1(df1):
+    res = {c: describe_numeric_1d(df1[c]) for c in df1.columns if c != 'n'}
+
+    # column a: all zeros
+    assert list(res['a'].index) == describe_numeric_1d_expected_col_list
+    assert(res['a']['count']) == 10
+    for c in ['1%', '5%', '25%', '50%', '75%', '95%', '99%', 'iqr', 'mad', 'mad_c1', 'max', 'mean', 'min', 'std']:
+        assert res['a'][c] == pytest.approx(0.0)
+
+    # column b: all ones
+    assert list(res['b'].index) == describe_numeric_1d_expected_col_list
+    assert(res['b']['count']) == 10
+    for c in ['1%', '5%', '25%', '50%', '75%', '95%', '99%', 'max', 'mean', 'min']:
+        assert res['b'][c] == pytest.approx(1.0)
+    for c in ['iqr', 'mad', 'mad_c1', 'std']:
+        assert res['b'][c] == pytest.approx(0.0)
+
+    # column c: 1 to 10
+    assert list(res['c'].index) == describe_numeric_1d_expected_col_list
+    assert(res['c']['count']) == 10
+    assert res['c']['mean'] == pytest.approx(5.5)
+    assert res['c']['std'] == pytest.approx(3.027650)
+    assert res['c']['mad'] == pytest.approx(3.706506)
+    assert res['c']['mad_c1'] == pytest.approx(2.5)
+    assert res['c']['iqr'] == pytest.approx(4.5)
+    assert res['c']['min'] == pytest.approx(1.0)
+    assert res['c']['1%'] == pytest.approx(1.09)
+    assert res['c']['5%'] == pytest.approx(1.45)
+    assert res['c']['25%'] == pytest.approx(3.25)
+    assert res['c']['50%'] == pytest.approx(5.5)
+    assert res['c']['75%'] == pytest.approx(7.75)
+    assert res['c']['95%'] == pytest.approx(9.55)
+    assert res['c']['99%'] == pytest.approx(9.91)
+    assert res['c']['max'] == pytest.approx(10.0)
