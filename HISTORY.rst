@@ -2,7 +2,7 @@
 History
 =======
 
-Unreleased
+0.2.0 (2020-07-04)
 -------------------
 
 * Update supported Python versions: drop Python 3.4 and added Python 3.8
