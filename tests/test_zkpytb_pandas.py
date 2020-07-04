@@ -199,3 +199,13 @@ def test_describe_numeric_1d_df1(df1):
     assert res['c']['95%'] == pytest.approx(9.55)
     assert res['c']['99%'] == pytest.approx(9.91)
     assert res['c']['max'] == pytest.approx(10.0)
+
+
+def test_describe_numeric_1d_empty_series():
+    res = describe_numeric_1d(pd.Series())
+    assert_array_equal(res.index, describe_numeric_1d_expected_col_list)
+    for c in describe_numeric_1d_expected_col_list:
+        if c == 'count':
+            assert res[c] == 0
+        else:
+            assert np.isnan(res[c])

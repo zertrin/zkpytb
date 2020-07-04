@@ -144,20 +144,27 @@ def describe_numeric_1d(series):
     """
     Patched version of pandas' .describe() function for Series
     which includes the calculation of the median absolute deviation and interquartile range
+
+    If the input Series is empty, the returned Series has "count" == 0
+    and all other stats are set to np.nan
     """
     stat_index = (['count', 'mean', 'std', 'mad', 'mad_c1', 'iqr', 'min']
                   + pd.io.formats.format.format_percentiles(extended_percentiles) + ['max'])
-    d = (
-        [
-            series.count(),
-            series.mean(),
-            series.std(),
-            mad()(series.dropna()),
-            mad(1, name='mad_c1')(series.dropna()),
-            scipy.stats.iqr(series, nan_policy='omit'),
-            series.min()
-        ]
-        + series.quantile(extended_percentiles).tolist()
-        + [series.max()]
-    )
+    if series.empty:
+        # [0, np.nan, np.nan, ..., np.nan]
+        d = [0] + [np.nan] * (len(stat_index) - 1)
+    else:
+        d = (
+            [
+                series.count(),
+                series.mean(),
+                series.std(),
+                mad()(series.dropna()),
+                mad(1, name='mad_c1')(series.dropna()),
+                scipy.stats.iqr(series, nan_policy='omit'),
+                series.min()
+            ]
+            + series.quantile(extended_percentiles).tolist()
+            + [series.max()]
+        )
     return pd.Series(d, index=stat_index, name=series.name)
