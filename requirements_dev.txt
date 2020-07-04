@@ -15,8 +15,6 @@ pytest-cov
 testfixtures>=6.0.0
 
 numpy
-pandas; python_version >= '3.5'
-pandas<0.21; python_version == '3.4'
+pandas
 scipy
-statsmodels; python_version >= '3.5'
-statsmodels<0.9; python_version == '3.4'
+statsmodels

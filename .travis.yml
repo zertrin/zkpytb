@@ -1,9 +1,9 @@
 language: python
 python:
+- 3.8
 - 3.7
 - 3.6
 - 3.5
-- 3.4
 install:
     - pip install -U tox-travis
     - pip install coveralls
@@ -12,11 +12,11 @@ after_success: coveralls
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
-  true:
+  on:
     python: 3.7
     repo: zertrin/zkpytb
     tags: true
-  user: zertrin
+  username: zertrin
   password:
     secure: !!binary |
       RDRGaVZyZktldU9KSDBGUEhhbGFJOHp3WitBb2xUbTRJb2pzNFdmZXJkd1hDZDgwblFCZ0s5Mnl3

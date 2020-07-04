@@ -5,6 +5,7 @@ History
 Unreleased
 -------------------
 
+* Update supported Python versions: drop Python 3.4 and added Python 3.8
 * zkpytb.pandas: describe_numeric_1d(series): handle case where input series is empty
 
 0.1.1 (2019-08-29)
