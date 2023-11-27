@@ -2,6 +2,12 @@
 History
 =======
 
+0.3.0 (2023-11-27)
+-------------------
+
+* Removed travis-ci integration and replaced it with GitHub Actions
+* Update of supported Python versions: dropped EOL'd Python 3.5 and 3.6 and added Python 3.9, 3.10, 3.11 and 3.12
+
 0.2.0 (2020-07-04)
 -------------------
 
