@@ -7,6 +7,10 @@ Zertrin Python Toolbox
         :target: https://pypi.python.org/pypi/zkpytb
         :alt: PyPI Package latest release
 
+.. image:: https://github.com/zertrin/zkpytb/actions/workflows/test.yml/badge.svg
+        :target: https://github.com/zertrin/zkpytb/actions/workflows/test.yml
+        :alt: Build Status
+
 .. image:: https://readthedocs.org/projects/zkpytb/badge/?version=latest
         :target: https://zkpytb.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
