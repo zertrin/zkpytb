@@ -7,14 +7,6 @@ Zertrin Python Toolbox
         :target: https://pypi.python.org/pypi/zkpytb
         :alt: PyPI Package latest release
 
-.. image:: https://img.shields.io/travis/zertrin/zkpytb.svg
-        :target: https://travis-ci.org/zertrin/zkpytb
-        :alt: Travis-CI Build status
-
-.. image:: https://coveralls.io/repos/github/zertrin/zkpytb/badge.svg?branch=master
-        :target: https://coveralls.io/github/zertrin/zkpytb?branch=master
-        :alt: Coverage status
-
 .. image:: https://readthedocs.org/projects/zkpytb/badge/?version=latest
         :target: https://zkpytb.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
