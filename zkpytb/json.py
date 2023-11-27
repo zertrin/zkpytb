@@ -16,6 +16,7 @@ class JSONEncoder(json.JSONEncoder):
     """
     A custom JSONEncoder that can handle a bit more data types than the one from stdlib.
     """
+
     def default(self, o):
         # early passthrough if it works by default
         try:

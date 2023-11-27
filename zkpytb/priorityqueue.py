@@ -16,12 +16,13 @@ class EmptyQueueError(Exception):
 
 class PriorityQueue:
     """Based on https://docs.python.org/3/library/heapq.html#priority-queue-implementation-notes"""
+
     def __init__(self, name=''):
         self.name = name
         self.pq = []                         # list of entries arranged in a heap
         self.entry_finder = {}               # mapping of tasks to entries
         self.counter = itertools.count()     # unique sequence count
-        self.num_tasks = 0                  # track the number of tasks in the queue
+        self.num_tasks = 0                   # track the number of tasks in the queue
 
     def __len__(self):
         return self.num_tasks

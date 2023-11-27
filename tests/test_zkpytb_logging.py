@@ -121,9 +121,9 @@ def test_setup_simple_console_and_file_logger_4(tmpdir):
     """
     logger_name = 'logtest4'
     with LogCapture('zkpytb.logging') as lc2:
-        logger = setup_simple_console_and_file_logger(logger_name, logdir=123)
+        logger = setup_simple_console_and_file_logger(logger_name, logdir=123)  # type: ignore
     err_msg = ('Invalid type for argument "logdir". '
-               'Expected "str", "bytes" or "pathlib.Path". '
+               'Expected "str" or "pathlib.Path". '
                'Received type: {}'.format(type(123)))
     lc2.check(('zkpytb.logging', 'ERROR', err_msg))
     assert len(logger.handlers) == 1

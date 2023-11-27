@@ -9,11 +9,13 @@ import hashlib
 import logging
 import subprocess
 
+from pathlib import Path
+from typing import Union
 
 mylogger = logging.getLogger('zkpytb.utils')
 
 
-def hashfile(filepath, hash_method='sha256', BLOCKSIZE=65536):
+def hashfile(filepath: Union[str, Path], hash_method: str = 'sha256', BLOCKSIZE: int = 65536) -> str:
     """Hash a file"""
 
     hasher = hashlib.new(hash_method)
@@ -27,15 +29,15 @@ def hashfile(filepath, hash_method='sha256', BLOCKSIZE=65536):
     return hasher.hexdigest()
 
 
-def hashstring(inputstring, hash_method='sha256'):
-    """Hash a file"""
+def hashstring(inputstring: bytes, hash_method: str = 'sha256') -> str:
+    """Hash a string"""
 
     hasher = hashlib.new(hash_method)
     hasher.update(inputstring)
     return hasher.hexdigest()
 
 
-def get_git_hash(rev='HEAD'):
+def get_git_hash(rev: str = 'HEAD') -> str:
     """Get the git hash of the current directory"""
 
     git_hash = ''

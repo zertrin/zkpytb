@@ -6,6 +6,7 @@
 import os
 import pytest
 import subprocess
+from pathlib import Path
 
 
 from zkpytb.utils import (
@@ -24,29 +25,36 @@ def a_hash_method(request):
 def test_hashstring_hashmethods(a_hash_method):
     hash_res1 = hashstring(b'', hash_method=a_hash_method)
     hash_res2 = hashstring(b'test', hash_method=a_hash_method)
-    assert isinstance(hash_res1, str)
-    assert len(hash_res1) > 0
+    hash_res3 = hashstring(b'test', hash_method=a_hash_method)
+    assert all(isinstance(res, str) for res in [hash_res1, hash_res2, hash_res3])
+    assert all(len(res) > 0 for res in [hash_res1, hash_res2, hash_res3])
     assert hash_res1 != hash_res2
+    assert hash_res2 == hash_res3
 
 
-def test_hashfile_hashmethods(a_hash_method, tmpdir):
-    f1 = tmpdir.join("hashfile1.txt")
-    f2 = tmpdir.join("hashfile2.txt")
-    f1.write("content1")
-    f2.write("content2")
+def test_hashfile_hashmethods(a_hash_method, tmp_path: Path):
+    f1 = tmp_path / "hashfile1.txt"
+    f2 = tmp_path / "hashfile2.txt"
+    f3 = tmp_path / "hashfile3.txt"
+    f1.write_text("content1")
+    f2.write_text("content2")
+    f3.write_text("content2")
     hashfile_res1 = hashfile(f1, hash_method=a_hash_method)
     hashfile_res2 = hashfile(f2, hash_method=a_hash_method)
-    assert isinstance(hashfile_res1, str)
-    assert len(hashfile_res1) > 0
+    hashfile_res3 = hashfile(f3, hash_method=a_hash_method)
+    assert all(isinstance(res, str) for res in [hashfile_res1, hashfile_res2, hashfile_res3])
+    assert all(len(res) > 0 for res in [hashfile_res1, hashfile_res2, hashfile_res3])
     assert hashfile_res1 != hashfile_res2
+    assert hashfile_res2 == hashfile_res3
 
 
 @pytest.mark.xfail(reason="Tox temp dir is located under the main git repository of the project...")
-def test_get_git_hash_nogit(tmpdir):
-    curdir = os.getcwd()
+def test_get_git_hash_nogit(tmp_path: Path):
+    curdir = Path.cwd()
     try:
-        nogit_dir = tmpdir.mkdir("nogit_dir")
-        os.chdir(str(nogit_dir))
+        nogit_dir = (tmp_path / "nogit_dir").mkdir()
+        assert nogit_dir is not None
+        os.chdir(nogit_dir)
         git_hash = get_git_hash()
     finally:
         os.chdir(curdir)
@@ -54,11 +62,12 @@ def test_get_git_hash_nogit(tmpdir):
     assert git_hash == ''
 
 
-def test_get_git_hash_emptygit(tmpdir):
-    curdir = os.getcwd()
+def test_get_git_hash_emptygit(tmp_path: Path):
+    curdir = Path.cwd()
     try:
-        emptygit_dir = tmpdir.mkdir("emptygit_dir")
-        os.chdir(str(emptygit_dir))
+        emptygit_dir: Path = tmp_path / "emptygit_dir"
+        emptygit_dir.mkdir()
+        os.chdir(emptygit_dir)
         subprocess.check_call(['git', 'init'])
         git_hash = get_git_hash()
     finally:
@@ -67,11 +76,12 @@ def test_get_git_hash_emptygit(tmpdir):
     assert git_hash == ''
 
 
-def test_get_git_hash_minimalgit(tmpdir):
-    curdir = os.getcwd()
+def test_get_git_hash_minimalgit(tmp_path: Path):
+    curdir = Path.cwd()
     try:
-        minimalgit_dir = tmpdir.mkdir("minimalgit_dir")
-        minimalgit_dir.join('testfile.txt').write('minimalgit')
+        minimalgit_dir: Path = tmp_path / "minimalgit_dir"
+        minimalgit_dir.mkdir()
+        (minimalgit_dir / 'testfile.txt').write_text('minimalgit')
         os.chdir(str(minimalgit_dir))
         subprocess.check_call(['git', 'init'])
         subprocess.check_call(['git', 'config', 'user.email', 'test@domain.invalid'])

@@ -9,6 +9,7 @@ import hashlib
 import json
 
 from collections import OrderedDict
+from typing import Any, Callable, Dict, Iterator, List
 
 from zkpytb.json import JSONEncoder
 
@@ -43,18 +44,18 @@ class AutoOrderedDict(OrderedDict, AutoDict):
     _base_class = OrderedDict
 
 
-def filter_dict_callfunc(dict_in, func):
+def filter_dict_callfunc(dict_in: Dict, func: Callable[..., bool]) -> Dict:
     assert isinstance(dict_in, dict)
     assert callable(func)
     return {k: v for (k, v) in dict_in.items() if func(k, v)}
 
 
-def filter_dict_only_scalar_values(dict_in):
+def filter_dict_only_scalar_values(dict_in: Dict) -> Dict:
     assert isinstance(dict_in, dict)
     return {k: v for (k, v) in dict_in.items() if not hasattr(v, '__iter__')}
 
 
-def filter_dict_with_keylist(dict_in, keylist, blacklistmode=False):
+def filter_dict_with_keylist(dict_in: Dict, keylist: List, blacklistmode=False) -> Dict:
     assert isinstance(dict_in, dict)
     assert isinstance(keylist, list)
     if blacklistmode:
@@ -63,7 +64,7 @@ def filter_dict_with_keylist(dict_in, keylist, blacklistmode=False):
         return {k: v for (k, v) in dict_in.items() if k in keylist}
 
 
-def mergedicts(dict1, dict2):
+def mergedicts(dict1, dict2) -> Iterator[Any]:
     assert isinstance(dict1, dict)
     assert isinstance(dict2, dict)
     for k in set(dict1.keys()).union(dict2.keys()):
@@ -81,11 +82,11 @@ def mergedicts(dict1, dict2):
             yield (k, dict2[k])
 
 
-def dict_stable_json_repr(dict_in):
+def dict_stable_json_repr(dict_in: Dict) -> str:
     return json.dumps(dict_in, sort_keys=True, cls=JSONEncoder)
 
 
-def hashdict(dict_in, method='sha1'):
+def hashdict(dict_in: Dict, method='sha1') -> str:
     assert isinstance(dict_in, dict)
     h = hashlib.new(method)
     dict_repr = dict_stable_json_repr(dict_in)
@@ -93,7 +94,7 @@ def hashdict(dict_in, method='sha1'):
     return h.hexdigest()
 
 
-def dict_values_map(f, d):
+def dict_values_map(f: Callable, d: Dict) -> Dict:
     """
     Simple helper to apply a function to the values of a dictionary.
 

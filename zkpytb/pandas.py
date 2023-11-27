@@ -4,6 +4,8 @@ Small helper functions related to pandas functionalities
 Author: Marc Gallet (2017)
 """
 
+from typing import List, Optional, Tuple
+
 try:
     import numpy as np
     import pandas as pd
@@ -17,10 +19,12 @@ except ImportError:  # pragma: no cover
 
 
 # More percentiles when using pd.describe()
-extended_percentiles = [.01, .05, .25, .5, .75, .95, .99]
+extended_percentiles: List[float] = [.01, .05, .25, .5, .75, .95, .99]
 
 
-def tdescr(df_in, percentiles=None, disp=True):
+def tdescr(df_in: pd.DataFrame,
+           percentiles: Optional[List[float]] = None,
+           disp: bool = True) -> pd.DataFrame:
     """
     Helper function to display and return the transposition
     of the output of DataFrame.describe(). This means that
@@ -48,7 +52,7 @@ def tdescr(df_in, percentiles=None, disp=True):
     return tdescr_out
 
 
-def df_query_with_ratio(df_in, query, ratio_name='ratio'):
+def df_query_with_ratio(df_in: pd.DataFrame, query: str, ratio_name='ratio') -> Tuple[pd.DataFrame, float]:
     """
     This function calls the .query() method on a DataFrame
     and additionally computes the ratio of resulting rows
@@ -63,7 +67,7 @@ def df_query_with_ratio(df_in, query, ratio_name='ratio'):
     return df_out, ratio
 
 
-def remove_outliers(df_in, column, sigma=3):
+def remove_outliers(df_in: pd.DataFrame, column, sigma: float = 3) -> pd.DataFrame:
     """
     Very simple filter that removes outlier rows
     from a DataFrame based on the distance from the
@@ -72,7 +76,7 @@ def remove_outliers(df_in, column, sigma=3):
     return df_in[np.abs(df_in[column] - df_in[column].mean()) <= (sigma * df_in[column].std())]
 
 
-def only_outliers(df_in, column, sigma=3):
+def only_outliers(df_in: pd.DataFrame, column, sigma: float = 3) -> pd.DataFrame:
     """
     Very simple filter that only keeps outlier rows
     from a DataFrame based on the distance from the
@@ -81,7 +85,7 @@ def only_outliers(df_in, column, sigma=3):
     return df_in[np.abs(df_in[column] - df_in[column].mean()) > (sigma * df_in[column].std())]
 
 
-def move_col_to_beginning_of_df(df_in, colname):
+def move_col_to_beginning_of_df(df_in: pd.DataFrame, colname: str) -> pd.DataFrame:
     """
     Small helper to move a column to the beginning of the DataFrame
     """
@@ -90,7 +94,7 @@ def move_col_to_beginning_of_df(df_in, colname):
     return df_in.reindex(columns=cols)
 
 
-def compare_df_cols(df_list, col_list, mode=1):
+def compare_df_cols(df_list: List[pd.DataFrame], col_list: List[str], mode=1) -> Optional[pd.DataFrame]:
     """
     Helper to compare the values of common columns between different dataframes
 
@@ -98,11 +102,11 @@ def compare_df_cols(df_list, col_list, mode=1):
     Mode 2: iterate over DataFrames as top level and columns as second level
     """
     if mode == 1:
-        colstoconcat = [df.loc[:, col].rename(df.loc[:, col].name + '_' + str(i + 1))
+        colstoconcat = [df.loc[:, col].rename(str(df.loc[:, col].name) + '_' + str(i + 1))
                         for col in col_list
                         for i, df in enumerate(df_list)]
     elif mode == 2:
-        colstoconcat = [df.loc[:, col].rename(df.loc[:, col].name + '_' + str(i + 1))
+        colstoconcat = [df.loc[:, col].rename(str(df.loc[:, col].name) + '_' + str(i + 1))
                         for i, df in enumerate(df_list)
                         for col in col_list]
     else:
@@ -140,7 +144,7 @@ def percentile(n):
     return _percentile
 
 
-def describe_numeric_1d(series):
+def describe_numeric_1d(series: pd.Series):
     """
     Patched version of pandas' .describe() function for Series
     which includes the calculation of the median absolute deviation and interquartile range
@@ -149,7 +153,7 @@ def describe_numeric_1d(series):
     and all other stats are set to np.nan
     """
     stat_index = (['count', 'mean', 'std', 'mad', 'mad_c1', 'iqr', 'min']
-                  + pd.io.formats.format.format_percentiles(extended_percentiles) + ['max'])
+                  + pd.io.formats.format.format_percentiles(extended_percentiles) + ['max'])  # type: ignore
     if series.empty:
         # [0, np.nan, np.nan, ..., np.nan]
         d = [0] + [np.nan] * (len(stat_index) - 1)

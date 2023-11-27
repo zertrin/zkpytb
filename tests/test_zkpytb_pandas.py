@@ -49,7 +49,7 @@ def generate_test_df(df_len, rand_seed):
         'd': np.arange(df_len, dtype=float),
         'e': np.random.RandomState(rand_seed).rand(df_len),
         'f': np.random.RandomState(rand_seed).randn(df_len),
-        'g': np.random.RandomState(rand_seed).random_integers(0, 100, df_len),
+        'g': np.random.RandomState(rand_seed).randint(0, 100 + 1, df_len),
         'n': np.zeros(df_len) + np.nan,
     }, index=range(df_len))
 
@@ -116,11 +116,13 @@ def test_move_col_to_beginning_of_df(df1):
 
 def test_compare_df_cols_mode1(df1, df2):
     res = compare_df_cols([df1, df2], ['e', 'f', 'g'], mode=1)
+    assert res is not None
     assert list(res.columns) == ['e_1', 'e_2', 'f_1', 'f_2', 'g_1', 'g_2']
 
 
 def test_compare_df_cols_mode2(df1, df2):
     res = compare_df_cols([df1, df2], ['e', 'f', 'g'], mode=2)
+    assert res is not None
     assert list(res.columns) == ['e_1', 'f_1', 'g_1', 'e_2', 'f_2', 'g_2']
 
 

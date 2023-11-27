@@ -1,14 +1,18 @@
 import logging
 import logging.config
 from pathlib import Path
+from typing import Mapping, Optional, Union
 
 
 mylogger = logging.getLogger('zkpytb.logging')
 
 
-def setup_simple_console_and_file_logger(logger_name, logfile=True,
-                                         logdir=None, logfilename=None,
-                                         log_level='DEBUG', options=None):
+def setup_simple_console_and_file_logger(logger_name: str,
+                                         logfile=True,
+                                         logdir: Optional[Union[str, Path]] = None,
+                                         logfilename: Optional[Union[str, Path]] = None,
+                                         log_level: str = 'DEBUG',
+                                         options: Optional[Mapping[str, str]] = None) -> logging.Logger:
     """
     TODOC
     """
@@ -26,7 +30,7 @@ def setup_simple_console_and_file_logger(logger_name, logfile=True,
             log_directory = Path(logdir)
         except TypeError:
             mylogger.exception('Invalid type for argument "logdir". '
-                               'Expected "str", "bytes" or "pathlib.Path". '
+                               'Expected "str" or "pathlib.Path". '
                                'Received type: {}'.format(type(logdir)))
             do_file_logging = False
         else:
