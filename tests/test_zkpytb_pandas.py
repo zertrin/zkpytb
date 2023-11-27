@@ -170,13 +170,13 @@ def test_describe_numeric_1d_df1(df1):
 
     # column a: all zeros
     assert list(res['a'].index) == describe_numeric_1d_expected_col_list
-    assert(res['a']['count']) == 10
+    assert res['a']['count'] == 10
     for c in ['1%', '5%', '25%', '50%', '75%', '95%', '99%', 'iqr', 'mad', 'mad_c1', 'max', 'mean', 'min', 'std']:
         assert res['a'][c] == pytest.approx(0.0)
 
     # column b: all ones
     assert list(res['b'].index) == describe_numeric_1d_expected_col_list
-    assert(res['b']['count']) == 10
+    assert res['b']['count'] == 10
     for c in ['1%', '5%', '25%', '50%', '75%', '95%', '99%', 'max', 'mean', 'min']:
         assert res['b'][c] == pytest.approx(1.0)
     for c in ['iqr', 'mad', 'mad_c1', 'std']:
@@ -184,7 +184,7 @@ def test_describe_numeric_1d_df1(df1):
 
     # column c: 1 to 10
     assert list(res['c'].index) == describe_numeric_1d_expected_col_list
-    assert(res['c']['count']) == 10
+    assert res['c']['count'] == 10
     assert res['c']['mean'] == pytest.approx(5.5)
     assert res['c']['std'] == pytest.approx(3.027650)
     assert res['c']['mad'] == pytest.approx(3.706506)

@@ -44,19 +44,19 @@ class AutoOrderedDict(OrderedDict, AutoDict):
 
 
 def filter_dict_callfunc(dict_in, func):
-    assert(isinstance(dict_in, dict))
-    assert(callable(func))
+    assert isinstance(dict_in, dict)
+    assert callable(func)
     return {k: v for (k, v) in dict_in.items() if func(k, v)}
 
 
 def filter_dict_only_scalar_values(dict_in):
-    assert(isinstance(dict_in, dict))
+    assert isinstance(dict_in, dict)
     return {k: v for (k, v) in dict_in.items() if not hasattr(v, '__iter__')}
 
 
 def filter_dict_with_keylist(dict_in, keylist, blacklistmode=False):
-    assert(isinstance(dict_in, dict))
-    assert(isinstance(keylist, list))
+    assert isinstance(dict_in, dict)
+    assert isinstance(keylist, list)
     if blacklistmode:
         return {k: v for (k, v) in dict_in.items() if k not in keylist}
     else:
@@ -64,8 +64,8 @@ def filter_dict_with_keylist(dict_in, keylist, blacklistmode=False):
 
 
 def mergedicts(dict1, dict2):
-    assert(isinstance(dict1, dict))
-    assert(isinstance(dict2, dict))
+    assert isinstance(dict1, dict)
+    assert isinstance(dict2, dict)
     for k in set(dict1.keys()).union(dict2.keys()):
         if k in dict1 and k in dict2:
             if isinstance(dict1[k], dict) and isinstance(dict2[k], dict):
@@ -86,7 +86,7 @@ def dict_stable_json_repr(dict_in):
 
 
 def hashdict(dict_in, method='sha1'):
-    assert(isinstance(dict_in, dict))
+    assert isinstance(dict_in, dict)
     h = hashlib.new(method)
     dict_repr = dict_stable_json_repr(dict_in)
     h.update(dict_repr.encode('utf-8'))
