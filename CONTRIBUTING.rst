@@ -64,11 +64,12 @@ Ready to contribute? Here's how to set up `zkpytb` for local development.
 
     $ git clone git@github.com:your_name_here/zkpytb.git
 
-3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
+3. Install your local copy into a virtual environment::
 
-    $ mkvirtualenv zkpytb
     $ cd zkpytb/
-    $ python setup.py develop
+    $ python -m venv .venv
+    $ source .venv/bin/activate
+    $ pip install -r requirements_dev.txt
 
 4. Create a branch for local development (please don't use `master`)::
 
@@ -81,8 +82,6 @@ Ready to contribute? Here's how to set up `zkpytb` for local development.
     $ flake8 zkpytb tests
     $ py.test
     $ tox
-
-   To get flake8 and tox, just pip install them into your virtualenv.
 
 6. Commit your changes and push your branch to GitHub::
 
